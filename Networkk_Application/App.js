@@ -1,38 +1,35 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SellerLoginSignupScreen from './src/screens/SellerLoginSignupScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import SignupScreen from './src/screens/SignupScreen';
 
-export default function App() {
-  const [count, setCount] = useState(0);
+const Stack = createStackNavigator();
 
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Networkk!</Text>
-      <Text style={styles.counter}>Count: {count}</Text>
-      <Button
-        title="Increase Count"
-        onPress={() => setCount(count + 1)}
-      />
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="SellerLoginSignup">
+        <Stack.Screen
+          name="SellerLoginSignup"
+          component={SellerLoginSignupScreen}
+          options={{ headerShown: false }} // Hide header for this screen
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }} // Hide header for LoginScreen
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignupScreen}
+          options={{ headerShown: false }} // Hide header for SignupScreen
+        />
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f8ff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#333',
-  },
-  counter: {
-    fontSize: 18,
-    marginBottom: 16,
-    color: '#555',
-  },
-});
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
