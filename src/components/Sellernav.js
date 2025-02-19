@@ -97,7 +97,6 @@ const SellerNav = () => {
               <NavButton icon="settings" title="Settings" route="SellerSettings" />
               <NavButton icon="star" title="Reviews" route="SellerReviews" />
               <NavButton icon="file-text" title="Documents" route="SellerDocuments" />
-              <NavButton icon="plus-circle" title="Create Service" route="GigCreate" />
               
               <TouchableOpacity
                 style={[styles.navButton, styles.logoutButton]}

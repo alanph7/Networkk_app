@@ -2,17 +2,18 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Animatable from 'react-native-animatable';
 import Navbar from '../components/nav'; // Add this import
 
 const HomeScreen = () => {
     const navigation = useNavigation();
 
     const ServiceItem = ({ icon, title, description }) => (
-        <View style={styles.serviceItem}>
-            <Icon name={icon} size={30} color="#000" />
+        <Animatable.View animation="fadeInUp" duration={2000} style={styles.serviceItem}>
+            <Icon name={icon} size={30} color="#000000" />
             <Text style={styles.serviceTitle}>{title}</Text>
             <Text style={styles.serviceDescription}>{description}</Text>
-        </View>
+        </Animatable.View>
     );
 
     return (
@@ -21,12 +22,14 @@ const HomeScreen = () => {
             <ScrollView style={styles.container}>
                 {/* Hero Section */}
                 <View style={styles.heroSection}>
-                    <Text style={styles.mainTitle}>Find Skilled Workers and Offer Your Services</Text>
-                    <Text style={styles.subtitle}>
+                    <Animatable.Text animation="fadeInDown" duration={2000} style={styles.mainTitle}>
+                        Find Skilled Workers and Offer Your Services
+                    </Animatable.Text>
+                    <Animatable.Text animation="fadeInUp" duration={2000} style={styles.subtitle}>
                         Networkk connects you with skilled workers in your area
-                    </Text>
+                    </Animatable.Text>
                     
-                    <View style={styles.buttonGroup}>
+                    <Animatable.View animation="fadeInUp" duration={2500} style={styles.buttonGroup}>
                         <TouchableOpacity 
                             style={styles.primaryButton}
                             onPress={() => navigation.navigate('Login')}
@@ -36,10 +39,10 @@ const HomeScreen = () => {
                         <TouchableOpacity style={styles.secondaryButton}>
                             <Text style={styles.secondaryButtonText}>Learn More</Text>
                         </TouchableOpacity>
-                    </View>
+                    </Animatable.View>
 
                     {/* Steps */}
-                    <View style={styles.stepsContainer}>
+                    <Animatable.View animation="fadeInUp" duration={3000} style={styles.stepsContainer}>
                         {[
                             {
                                 step: "Step 1",
@@ -59,19 +62,21 @@ const HomeScreen = () => {
                             }
                         ].map((item, index) => (
                             <View key={index} style={styles.stepItem}>
-                                <Icon name="check-circle" size={24} color="#000" />
+                                <Icon name="check-circle" size={24} color="#000000" />
                                 <View style={styles.stepTextContainer}>
                                     <Text style={styles.stepTitle}>{item.step}</Text>
                                     <Text style={styles.stepDescription}>{item.desc}</Text>
                                 </View>
                             </View>
                         ))}
-                    </View>
+                    </Animatable.View>
                 </View>
 
                 {/* Services Section */}
                 <View style={styles.servicesSection}>
-                    <Text style={styles.sectionTitle}>Our Services</Text>
+                    <Animatable.Text animation="fadeInDown" duration={2000} style={styles.sectionTitle}>
+                        Our Services
+                    </Animatable.Text>
                     <View style={styles.servicesGrid}>
                         <ServiceItem 
                             icon="hammer" 
@@ -98,11 +103,10 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: '#f8f8f8',
+        backgroundColor: '#fff',
     },
     container: {
         flex: 1,
-        backgroundColor: '#f8f8f8',
     },
     heroSection: {
         padding: 20,
@@ -113,10 +117,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
+        color: '#000000',
     },
     subtitle: {
         fontSize: 18,
-        color: '#666',
+        color: '#555',
         textAlign: 'center',
         marginBottom: 30,
     },
@@ -126,10 +131,10 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     primaryButton: {
-        backgroundColor: '#000',
+        backgroundColor: '#000000',
         paddingVertical: 15,
         paddingHorizontal: 30,
-        borderRadius: 8,
+        borderRadius: 5,
         marginRight: 10,
     },
     primaryButtonText: {
@@ -141,12 +146,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingVertical: 15,
         paddingHorizontal: 30,
-        borderRadius: 8,
+        borderRadius: 5,
         borderWidth: 2,
-        borderColor: '#000',
+        borderColor: '#000000',
     },
     secondaryButtonText: {
-        color: '#000',
+        color: '#000000',
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -157,6 +162,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20,
+        backgroundColor: '#f8f8f8',
+        padding: 15,
+        borderRadius: 5,
     },
     stepTextContainer: {
         marginLeft: 15,
@@ -165,40 +173,53 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 5,
+        color: '#000000',
     },
     stepDescription: {
-        color: '#666',
+        color: '#444',
         fontSize: 16,
+        lineHeight: 22,
     },
     servicesSection: {
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#f8f8f8',
     },
     sectionTitle: {
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 20,
+        color: '#000000',
     },
     servicesGrid: {
         flexDirection: 'column',
         gap: 20,
     },
     serviceItem: {
-        backgroundColor: '#f8f8f8',
+        backgroundColor: '#fff',
         padding: 20,
-        borderRadius: 8,
+        borderRadius: 5,
         alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
     },
     serviceTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         marginTop: 10,
         marginBottom: 5,
+        color: '#000000',
     },
     serviceDescription: {
         textAlign: 'center',
-        color: '#666',
+        color: '#444',
+        lineHeight: 22,
     },
 });
 

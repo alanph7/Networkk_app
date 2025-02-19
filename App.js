@@ -8,7 +8,6 @@ import SellerLogin from './src/screens/SellerLogin';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import UserDetailsForm from './src/User/UserDetails'; // Add this import
 import SellerDetailsForm from './src/Seller/SellerDetails'; // Add this import
-import GigCreate from './src/Seller/GigCreate'; // Add this import
 
 const Stack = createStackNavigator();
 
@@ -81,14 +80,6 @@ export default function App() {
                options={{ 
                   headerShown: true,
                   title: 'Service Provider Profile'
-               }}
-            />
-            <Stack.Screen 
-               name="GigCreate" 
-               component={GigCreate}
-               options={{ 
-                  headerShown: true,
-                  title: 'Create Service'
                }}
             />
          </Stack.Navigator>
