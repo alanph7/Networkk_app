@@ -21,6 +21,8 @@ import axiosInstance from '../../utils/axios';
 import { haversineDistance } from '../components/Haversine';
 import * as Location from 'expo-location';
 import dayjs from 'dayjs';
+import { Animated } from 'react-native';
+import { useRef } from 'react';
 
 const { width } = Dimensions.get('window');
 
@@ -241,15 +243,17 @@ export default function SearchScreen() {
     }
 
     setFilteredProviders(results);
+    
   };
 
   const renderServiceCard = ({ item: provider }) => {
     const cardOpacity = provider.isOpen ? 1 : 0.5;
+    console.log('provider:', provider.demoPics);
 
     return (
       <TouchableOpacity 
         style={[styles.card, { opacity: cardOpacity }]}
-        onPress={() => provider.isOpen && navigation.navigate('ServiceDetail', { serviceId: provider.serviceId })}
+        onPress={() => provider.isOpen && navigation.navigate('ServiceDetails', { serviceId: provider.serviceId })}
         disabled={!provider.isOpen}
       >
         <Image
@@ -349,11 +353,53 @@ useEffect(() => {
     userLocation // Add userLocation as a dependency if needed
   ]);
 
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+
+useEffect(() => {
+  if (isLoadingLocation) {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.3,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }
+  return () => {
+    pulseAnim.stopAnimation();
+  };
+}, [isLoadingLocation]);
+
+  // if (isLoadingLocation) {
+  //   return (
+  //     <View style={styles.centerContainer}>
+  //       <ActivityIndicator size="large" color="#0EA5E9" />
+  //       <Text>Loading your location...</Text>
+  //     </View>
+  //   );
+  // }
+
+
   if (isLoadingLocation) {
     return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#0EA5E9" />
-        <Text>Loading your location...</Text>
+      <View style={styles.loadingContainer}>
+        <View style={styles.mapMarkerContainer}>
+          <Animated.View style={[styles.pulseCircle, {
+            transform: [{ scale: pulseAnim }]
+          }]} />
+          <View style={styles.mapMarker}>
+            <Icon name="map-marker" size={28} color="#FFFFFF" />
+          </View>
+        </View>
+        <Text style={styles.loadingText}>Finding your location...</Text>
+        <Text style={styles.loadingSubText}>This helps us show services near you</Text>
       </View>
     );
   }
@@ -758,6 +804,55 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         color: '#374151',
       },
+      // Add to your StyleSheet
+loadingContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#FFFFFF',
+  paddingHorizontal: 24,
+},
+mapMarkerContainer: {
+  width: 120,
+  height: 120,
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: 24,
+},
+mapMarker: {
+  width: 50,
+  height: 50,
+  borderRadius: 25,
+  backgroundColor: '#0EA5E9',
+  justifyContent: 'center',
+  alignItems: 'center',
+  shadowColor: '#0EA5E9',
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.5,
+  shadowRadius: 5,
+  elevation: 5,
+  zIndex: 2,
+},
+pulseCircle: {
+  position: 'absolute',
+  width: 90,
+  height: 90,
+  borderRadius: 45,
+  backgroundColor: 'rgba(14, 165, 233, 0.2)',
+  zIndex: 1,
+},
+loadingText: {
+  fontSize: 18,
+  fontWeight: '600',
+  color: '#0EA5E9',
+  textAlign: 'center',
+  marginBottom: 8,
+},
+loadingSubText: {
+  fontSize: 14,
+  color: '#6B7280',
+  textAlign: 'center',
+},
   });
 
 // const styles = StyleSheet.create({

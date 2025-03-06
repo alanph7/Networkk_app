@@ -9,6 +9,7 @@ import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import UserDetailsForm from './src/User/UserDetails'; // Add this import
 import SellerDetailsForm from './src/Seller/SellerDetails'; // Add this import
 import SearchScreen from './src/screens/Search';
+import ServiceDetails from './src/screens/ServiceDetails';
 
 const Stack = createStackNavigator();
 
@@ -89,6 +90,14 @@ export default function App() {
                options={{ 
                   headerShown: true,
                   title: 'User Search'
+               }}
+            />
+            <Stack.Screen 
+               name="ServiceDetails" 
+               component={ServiceDetails}
+               options={{ 
+                  headerShown: true,
+                  title: 'Service Details'
                }}
             />
          </Stack.Navigator>
